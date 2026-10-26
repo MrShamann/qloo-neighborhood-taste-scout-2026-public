@@ -1,0 +1,13 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.env
+.env.*
+!.env.example
+.secrets/
+.private_evidence/
+*token*.txt
+*secret*.txt
+.wrangler/

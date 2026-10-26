@@ -1,0 +1,128 @@
+{
+  "revision": "synthetic-scenes-20261024",
+  "scenes": [
+    {
+      "id": "jazz-new-york",
+      "name": "A night that listens",
+      "deck": "New York / Miles Davis / Jazz listening",
+      "city": "New York",
+      "artist": "Miles Davis",
+      "limit": 3,
+      "visual": "01",
+      "mission": "Find culture-led places for a small fictional group interested in jazz and slow evenings.",
+      "replay": {
+        "search": {
+          "results": [
+            {
+              "name": "Miles Davis",
+              "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000001",
+              "types": [
+                "urn:entity:artist"
+              ]
+            }
+          ]
+        },
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Jazz Reading Room",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000101"
+              },
+              {
+                "name": "Fictional Coffee Listening Bar",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000102"
+              },
+              {
+                "name": "Fictional Vinyl Library",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000103"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "jazz-tokyo",
+      "name": "A quieter kind of city",
+      "deck": "Tokyo / Chet Baker / Intimate spaces",
+      "city": "Tokyo",
+      "artist": "Chet Baker",
+      "limit": 3,
+      "visual": "02",
+      "mission": "Contrast an invented group-level interest in understated jazz with an equally fictional Tokyo venue set.",
+      "replay": {
+        "search": {
+          "results": [
+            {
+              "name": "Chet Baker",
+              "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000002",
+              "types": [
+                "urn:entity:artist"
+              ]
+            }
+          ]
+        },
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Rainy Day Listening Room",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000201"
+              },
+              {
+                "name": "Fictional Evening Paper Cafe",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000202"
+              },
+              {
+                "name": "Fictional Night Record Library",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000203"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "jazz-paris",
+      "name": "Culture before convenience",
+      "deck": "Paris / Nina Simone / Music & conversation",
+      "city": "Paris",
+      "artist": "Nina Simone",
+      "limit": 3,
+      "visual": "03",
+      "mission": "Use a made-up cross-domain cultural brief to inspect group-level rather than personal affinity.",
+      "replay": {
+        "search": {
+          "results": [
+            {
+              "name": "Nina Simone",
+              "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000003",
+              "types": [
+                "urn:entity:artist"
+              ]
+            }
+          ]
+        },
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Lantern Concert Cafe",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000301"
+              },
+              {
+                "name": "Fictional Salon of Small Sounds",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000302"
+              },
+              {
+                "name": "Fictional Bookshop After Dark",
+                "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000303"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

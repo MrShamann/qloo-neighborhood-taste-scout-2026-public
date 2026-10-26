@@ -1,0 +1,18 @@
+# PRIVATE pre-release only. NO wrangler deploy without exact Founder authority.
+name = "qloo-neighborhood-evidence-agent"
+main = "worker.mjs"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[durable_objects.bindings]]
+name = "QLOO_BUDGET"
+class_name = "QlooBudget"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["QlooBudget"]

@@ -1,0 +1,17 @@
+{
+  "search": {
+    "results": [
+      {"name": "Miles Davis", "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000001",
+       "types": ["urn:entity:artist"]}
+    ]
+  },
+  "insights": {
+    "results": {
+      "entities": [
+        {"name": "Fictional Jazz Reading Room", "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000101"},
+        {"name": "Fictional Coffee Listening Bar", "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000102"},
+        {"name": "Fictional Vinyl Library", "entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000103"}
+      ]
+    }
+  }
+}

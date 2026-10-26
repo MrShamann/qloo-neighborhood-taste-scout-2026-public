@@ -1,0 +1,248 @@
+{
+  "revision": "original-fake-dual-interest-20261024",
+  "bridges": [
+    {
+      "id": "bridge-new-york",
+      "name": "The mixed-sound rendezvous",
+      "city": "New York",
+      "artists": [
+        "Miles Davis",
+        "Radiohead"
+      ],
+      "objective": "Help a fictional independent evening planner explore places for a group that loves two different music traditions.",
+      "replay": {
+        "searches": [
+          {
+            "results": [
+              {
+                "name": "Miles Davis",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000101",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          },
+          {
+            "results": [
+              {
+                "name": "Radiohead",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000102",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          }
+        ],
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Quiet Signal Room",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000111",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000101",
+                        "score": 0.68
+                      },
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000102",
+                        "score": 0.49
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Blue and Electric Cafe",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000112",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000101",
+                        "score": 0.24
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Listening Atelier",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000113",
+                "type": "urn:entity:place"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "bridge-tokyo",
+      "name": "Two moods, one city",
+      "city": "Tokyo",
+      "artists": [
+        "Chet Baker",
+        "Björk"
+      ],
+      "objective": "Find a source-grounded shortlist that might suit a fictional small-group night with contrasting sensibilities.",
+      "replay": {
+        "searches": [
+          {
+            "results": [
+              {
+                "name": "Chet Baker",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          },
+          {
+            "results": [
+              {
+                "name": "Björk",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000202",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          }
+        ],
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Floating Record Hall",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000211",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201",
+                        "score": 0.68
+                      },
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000202",
+                        "score": 0.49
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Afterhours Book Counter",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000212",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201",
+                        "score": 0.24
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Monochrome Listening Bar",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000213",
+                "type": "urn:entity:place"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "bridge-paris",
+      "name": "Between soul and circuitry",
+      "city": "Paris",
+      "artists": [
+        "Nina Simone",
+        "Daft Punk"
+      ],
+      "objective": "Explore possible shared discovery across classic soul and electronic music without inventing a matching audience.",
+      "replay": {
+        "searches": [
+          {
+            "results": [
+              {
+                "name": "Nina Simone",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000301",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          },
+          {
+            "results": [
+              {
+                "name": "Daft Punk",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000302",
+                "types": [
+                  "urn:entity:artist"
+                ]
+              }
+            ]
+          }
+        ],
+        "insights": {
+          "results": {
+            "entities": [
+              {
+                "name": "Fictional Velvet Record Library",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000311",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000301",
+                        "score": 0.68
+                      },
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000302",
+                        "score": 0.49
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Analog Garden",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000312",
+                "type": "urn:entity:place",
+                "query": {
+                  "explainability": {
+                    "signal.interests.entities": [
+                      {
+                        "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000301",
+                        "score": 0.24
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "Fictional Nightlight Gallery",
+                "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000313",
+                "type": "urn:entity:place"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+# PRIVATE DRAFT: no service, cloud resource or public code has been created.
+# Render Free compute alone does not guarantee zero billed bandwidth/builds:
+# the workspace owner must verify the full cost cap and remaining included use.
+# This adapter is SYNTHETIC ONLY until a distinct verified Qloo quota release.
+services:
+  - type: web
+    name: qloo-taste-scout-cleanroom
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    autoDeployTrigger: off
+    buildCommand: python -m compileall -q src
+    startCommand: python -m src.hosted_webapp --listen 0.0.0.0
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+      - key: QLOO_PUBLIC_HOSTNAME
+        sync: false
+      - key: QLOO_PUBLIC_DEPLOY_APPROVED
+        sync: false
+      - key: QLOO_FREE_HOSTING_BILLING_VERIFIED
+        sync: false
