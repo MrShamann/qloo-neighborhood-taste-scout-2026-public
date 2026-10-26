@@ -1,6 +1,8 @@
 # Neighborhood Taste Scout — Qloo Agentic Hackathon
 
-**Independent MIT-licensed source. Live Qloo verification and final Devpost submission remain pending.**
+**Independent MIT-licensed source. Public fictional preview is online; authenticated Qloo verification and final Devpost submission remain pending.**
+
+[Interactive Cloudflare Free demo (FICTIONAL data only)](https://qloo-neighborhood-evidence-agent.jy-edward.workers.dev/) · [Static backup preview](https://mrshamann.github.io/qloo-neighborhood-taste-scout-2026-public/)
 
 This original clean-room cultural decision-evidence agent is for an independent event curator who wants to inspect how two public artist influences relate to candidate places in one city. It explicitly separates source-backed evidence from fictional examples. NEXT, HOLD and ABSTAIN refer to whether source contributions for two IDs are present; they are **not** an assertion of shared user preference or of a venue's safety, hours or availability.
 

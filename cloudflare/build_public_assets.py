@@ -19,7 +19,7 @@ def main():
     # live requests, even in local development.
     (target/"static-adapter.js").unlink()
     html=(ROOT/"web"/"index.html").read_text()
-    html=html.replace("<main>",'<aside role="note" class="offline-banner">Private deployment candidate. Fictional examples only unless source is clearly marked Qloo API verified; no group fit claims.</aside><main>',1)
+    html=html.replace("<main>",'<aside role="note" class="offline-banner">Public interactive preview: all current place examples are FICTIONAL, not authenticated Qloo outputs. Live Qloo calls remain disabled pending verified event free-use and data rights. No personal data, booking or payment.</aside><main>',1)
     (target/"index.html").write_text(html)
     assert "static-adapter.js" not in html
     print("PRIVATE_WORKER_ASSETS_READY",target)
