@@ -203,7 +203,7 @@ function displayBridgeEvidence(result){
       const sourceRefs=place.source_explainability.map(ref=>{
         const artist=result.artists.find(x=>x.source_entity_id===ref.entity_id);
         if(!artist || typeof ref.score!=="number" || !Number.isFinite(ref.score)
-            || ref.score<0 || ref.score>1)throw Error("Untrusted source attribution");
+            || ref.score<=0 || ref.score>1)throw Error("Untrusted source attribution");
         return artist.artist+": "+ref.score.toFixed(2);
       });
       body.append(node("small","bridge-place-explain",
