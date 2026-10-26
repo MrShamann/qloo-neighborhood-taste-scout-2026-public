@@ -1,0 +1,34 @@
+{
+  "scenes": [
+    {
+      "id": "jazz-new-york",
+      "name": "A night that listens",
+      "deck": "New York / Miles Davis / Jazz listening",
+      "city": "New York",
+      "artist": "Miles Davis",
+      "visual": "01",
+      "mission": "Find culture-led places for a small fictional group interested in jazz and slow evenings."
+    },
+    {
+      "id": "jazz-tokyo",
+      "name": "A quieter kind of city",
+      "deck": "Tokyo / Chet Baker / Intimate spaces",
+      "city": "Tokyo",
+      "artist": "Chet Baker",
+      "visual": "02",
+      "mission": "Contrast an invented group-level interest in understated jazz with an equally fictional Tokyo venue set."
+    },
+    {
+      "id": "jazz-paris",
+      "name": "Culture before convenience",
+      "deck": "Paris / Nina Simone / Music & conversation",
+      "city": "Paris",
+      "artist": "Nina Simone",
+      "visual": "03",
+      "mission": "Use a made-up cross-domain cultural brief to inspect group-level rather than personal affinity."
+    }
+  ],
+  "provider_ready": false,
+  "live_call_count": 0,
+  "source": "ORIGINAL SYNTHETIC OFFLINE DEMO"
+}

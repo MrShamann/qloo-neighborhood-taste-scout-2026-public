@@ -1,0 +1,38 @@
+{
+  "bridges": [
+    {
+      "id": "bridge-new-york",
+      "name": "The mixed-sound rendezvous",
+      "city": "New York",
+      "artists": [
+        "Miles Davis",
+        "Radiohead"
+      ],
+      "objective": "Help a fictional independent evening planner explore places for a group that loves two different music traditions."
+    },
+    {
+      "id": "bridge-tokyo",
+      "name": "Two moods, one city",
+      "city": "Tokyo",
+      "artists": [
+        "Chet Baker",
+        "Björk"
+      ],
+      "objective": "Find a source-grounded shortlist that might suit a fictional small-group night with contrasting sensibilities."
+    },
+    {
+      "id": "bridge-paris",
+      "name": "Between soul and circuitry",
+      "city": "Paris",
+      "artists": [
+        "Nina Simone",
+        "Daft Punk"
+      ],
+      "objective": "Explore possible shared discovery across classic soul and electronic music without inventing a matching audience."
+    }
+  ],
+  "provider_ready": false,
+  "live_call_count": 0,
+  "event_key_exposed": false,
+  "source": "ORIGINAL SYNTHETIC OFFLINE DEMO"
+}

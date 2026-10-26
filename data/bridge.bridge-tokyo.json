@@ -1,0 +1,111 @@
+{
+  "mode": "SYNTHETIC_BRIDGE_REPLAY_NO_API",
+  "provider_verified": false,
+  "scene_id": "bridge-tokyo",
+  "city": "Tokyo",
+  "artists": [
+    {
+      "artist": "Chet Baker",
+      "source_entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201"
+    },
+    {
+      "artist": "Björk",
+      "source_entity_id": "7E4CA610-27AB-4823-9D91-BB0000000202"
+    }
+  ],
+  "places": [
+    {
+      "name": "Fictional Floating Record Hall",
+      "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000211",
+      "rank": 1,
+      "source_explainability": [
+        {
+          "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201",
+          "score": 0.68
+        },
+        {
+          "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000202",
+          "score": 0.49
+        }
+      ],
+      "source_attribution_state": "EXPLICIT_SOURCE_VALUES_ONLY",
+      "source_coverage_count": 2,
+      "source_coverage_state": "BOTH_EXPLICIT_INPUT_IDS",
+      "source_coverage_is_user_fit": false,
+      "agent_decision": "SOURCE_VALUES_FOR_BOTH_REVIEW_ONLY",
+      "agent_decision_is_automatic_approval": false
+    },
+    {
+      "name": "Fictional Afterhours Book Counter",
+      "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000212",
+      "rank": 2,
+      "source_explainability": [
+        {
+          "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000201",
+          "score": 0.24
+        }
+      ],
+      "source_attribution_state": "EXPLICIT_SOURCE_VALUES_ONLY",
+      "source_coverage_count": 1,
+      "source_coverage_state": "ONE_EXPLICIT_INPUT_ID",
+      "source_coverage_is_user_fit": false,
+      "agent_decision": "SECOND_INTEREST_NOT_EVIDENCED",
+      "agent_decision_is_automatic_approval": false
+    },
+    {
+      "name": "Fictional Monochrome Listening Bar",
+      "entity_id": "7E4CA610-27AB-4823-9D91-BB0000000213",
+      "rank": 3,
+      "source_explainability": [],
+      "source_attribution_state": "UNAVAILABLE_NOT_INFERRED",
+      "source_coverage_count": 0,
+      "source_coverage_state": "NO_INTEREST_ATTRIBUTION_PROVIDED",
+      "source_coverage_is_user_fit": false,
+      "agent_decision": "ABSTAIN_NO_INTEREST_ATTRIBUTION",
+      "agent_decision_is_automatic_approval": false
+    }
+  ],
+  "source_explainability_count": 2,
+  "agent_steps": [
+    {
+      "phase": "RESOLVE_A",
+      "tool": "Qloo /search",
+      "status": "MOCK"
+    },
+    {
+      "phase": "RESOLVE_B",
+      "tool": "Qloo /search",
+      "status": "MOCK"
+    },
+    {
+      "phase": "GROUND_BOTH",
+      "tool": "Qloo /v2/insights",
+      "status": "MOCK"
+    },
+    {
+      "phase": "FACT_CHECK",
+      "tool": "Entity ID, source provenance and abstention gate",
+      "status": "PASS"
+    },
+    {
+      "phase": "HUMAN_REVIEW",
+      "tool": "Human decides; never booking",
+      "status": "REQUIRED"
+    }
+  ],
+  "provider_api_calls": 0,
+  "automatic_actions": 0,
+  "human_confirmation_required": true,
+  "comparison": {
+    "ungrounded_baseline": "ABSTAIN_FROM_NAMING_UNVERIFIED_PLACES",
+    "unverified_place_names_allowed": 0,
+    "measured_user_benefit_proven": false,
+    "cross_taste_lift_proven": false
+  },
+  "limits": [
+    "The two input artist names are public cultural entities, not personal profiles.",
+    "A group-level affinity is not an individual prediction.",
+    "Qloo entity rank is not proof of place opening hours or availability.",
+    "Explainability is displayed only if explicit Qloo values are returned."
+  ]
+}

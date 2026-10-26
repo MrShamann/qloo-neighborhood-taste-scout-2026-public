@@ -1,0 +1,55 @@
+{
+  "mode": "SYNTHETIC_FIXTURE_NO_API_CALL",
+  "provider_verified": false,
+  "selected_artist_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000001",
+  "city": "New York",
+  "places": [
+    {
+      "name": "Fictional Jazz Reading Room",
+      "qloo_entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000101",
+      "note": "group-level affinity signal, not an individual prediction.",
+      "rank": 1
+    },
+    {
+      "name": "Fictional Coffee Listening Bar",
+      "qloo_entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000102",
+      "note": "group-level affinity signal, not an individual prediction.",
+      "rank": 2
+    },
+    {
+      "name": "Fictional Vinyl Library",
+      "qloo_entity_id": "4B5FA5D2-5CC6-42B0-9102-FA0000000103",
+      "note": "group-level affinity signal, not an individual prediction.",
+      "rank": 3
+    }
+  ],
+  "human_confirmation_required": true,
+  "agent_steps": [
+    {
+      "phase": "RESOLVE",
+      "tool": "Qloo /search (synthetic replay)",
+      "status": "MOCK"
+    },
+    {
+      "phase": "GROUND",
+      "tool": "Qloo /v2/insights (synthetic replay)",
+      "status": "MOCK"
+    },
+    {
+      "phase": "REVIEW",
+      "tool": "Entity ID + group-level safety checks",
+      "status": "PASS"
+    }
+  ],
+  "limits": [
+    "All place names are fictional fixtures.",
+    "No personal preferences, GPS, or identity was submitted.",
+    "No Qloo API call was made."
+  ],
+  "scene_id": "jazz-new-york",
+  "brief": {
+    "city": "New York",
+    "interest_artist": "Miles Davis",
+    "mission": "Find culture-led places for a small fictional group interested in jazz and slow evenings."
+  }
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="dark"/>
+  <title>Neighborhood Taste Scout | Qloo Agentic Prototype</title>
+  <link href="./styles.css" rel="stylesheet"/>
+  <script defer src="./static-adapter.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="identity"><span class="glyph">N<span>✳</span></span><div><strong>NEIGHBORHOOD</strong><span>TASTE SCOUT</span></div></div>
+      <div class="right-meta"><span class="tiny-dot"></span> Independent AI Agent Lab / Qloo Track <span class="divider"></span><span class="protocol">2026 / 01</span></div>
+    </header>
+    <aside class="offline-banner" role="note"><strong>FICTIONAL JUDGE REPLAY ONLY.</strong> No live Qloo API, personal data, venue booking or measured shared-taste fit. The authentic sponsor integration remains gated pending verified event quota, expiration and no-billing terms.</aside>
+    <main>
+      <section class="hero">
+        <div class="hero-copy"><span class="kicker">CULTURAL DECISIONS / EVIDENCE BEFORE ENDORSEMENT</span>
+          <h1>Don't book a hunch. <em>Check the evidence.</em></h1>
+          <p>For independent event curators: two public cultural signals, one city, and a decision that needs receipts. See what evidence supports a place, what is missing, and when the agent must abstain. This preview uses fictional data, not live Qloo results.</p>
+        </div>
+        <div class="hero-art" aria-hidden="true"><span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><span class="orb-core">TASTE<br/>GRAPH</span><span class="hero-star s1">✳</span><span class="hero-star s2">✳</span></div>
+      </section>
+<section class="bridge-workshop" id="bridge-workshop" aria-label="Dual cultural interest planning">
+        <div class="bridge-intro">
+          <div><span class="index">01 / EVIDENCE TRIAGE: TWO SIGNALS, ONE CURATOR DECISION</span>
+            <h2>Which venue claims <em>survive the evidence?</em></h2>
+            <p>Resolve two cultural influences independently, request one joint Qloo Insights signal when authorized, and check each venue's explicit source coverage. NEXT, HOLD or ABSTAIN is an evidence decision for a human curator—not a prediction of anyone's preferences.</p>
+          </div>
+          <div class="bridge-tally"><small>AGENT TOOL CHAIN</small><strong>2 + 1</strong><span>2 artist entity lookups<br/>1 combined insights query<br/>Live use subject to verified API access</span></div>
+        </div>
+        <div class="bridge-body">
+          <div class="bridge-selector">
+            <span class="mini-label">CHOOSE A FICTIONAL CROSS-TASTE BRIEF</span>
+            <div id="bridge-options" class="bridge-options"><span class="muted">Reading safe local scenarios…</span></div>
+            <div class="bridge-actions">
+              <button id="bridge-run" type="button" disabled>Audit venue evidence <span>↗</span></button>
+              <button id="bridge-snapshot" type="button" disabled>Review approved Qloo snapshot <span>↗</span></button>
+              <label class="bridge-live"><input type="checkbox" id="bridge-live" disabled/> Live Qloo combined signals</label>
+            </div>
+            <p class="bridge-hint" id="bridge-hint">Real API mode requires verified event quota and locally secured key; no personal profiles.</p>
+          </div>
+          <div class="bridge-findings">
+            <div class="bridge-result-head"><span class="mini-label">EVIDENCE COVERAGE / DECISION STATUS</span><span id="bridge-provenance" class="bridge-provenance">NOT RUN</span></div>
+            <h3 id="bridge-title">No evidence, no endorsement.</h3>
+            <p id="bridge-subtitle">Choose two public cultural influences and inspect the fictional evidence-triage rehearsal.</p>
+            <details id="bridge-source-chain" class="bridge-source-chain" hidden>
+              <summary>Inspect both input artist entity IDs and the Insights source chain</summary>
+              <div id="bridge-source-chain-details"></div>
+            </details>
+            <div class="bridge-result-list" id="bridge-result-list"><p class="muted">No recommendations have been verified.</p></div>
+            <aside id="bridge-decision-note" class="bridge-decision-note" aria-live="polite"><small>HUMAN DECISION CHECK</small><p>Select a source-backed candidate for a review dossier. This will not book, pay or save personal information.</p></aside>
+            <div class="bridge-controls"><span>WITHOUT SOURCE DATA</span><p><strong>ABSTAIN</strong> — no fabricated venue names, personal predictions or empirical uplift claims.</p></div>
+          </div>
+        </div>
+        <div class="bridge-evidence-bar">
+          <span id="bridge-source-status">Offline scenarios are invented; no actual Qloo observation has been made.</span>
+          <span id="bridge-steps">RESOLVE A → RESOLVE B → GROUND BOTH → VERIFY → HUMAN REVIEW</span>
+        </div>
+      </section>
+      <div class="workspace">
+        <section class="panel brief-panel">
+          <div class="panel-top"><span class="index">02 / SINGLE-TASTE SANITY CONTROL</span><span class="line"></span><span class="recorded">SYNTHETIC / NO PII</span></div>
+          <h2>Choose a cultural thread.</h2>
+          <p class="sub">Three invented group scenarios. We never ask for your location, identity or browsing history.</p>
+          <div class="scene-list" id="scenes"><p class="muted">Loading scenarios…</p></div>
+          <div class="brief-footer">
+            <div><span class="mini-label">YOUR EXPERIMENT</span><strong id="brief-artist">Miles Davis</strong><span id="brief-city">New York / cultural discovery</span></div>
+            <button type="button" id="run">Explore taste signals <span>↗</span></button>
+          </div>
+          <div class="toggle-line"><label><input type="checkbox" id="live"/> Live Qloo Taste AI <span id="provider-hint">/ requires issued event key and quota verification</span></label></div>
+        </section>
+        <section class="panel findings-panel">
+          <div class="panel-top"><span class="index">02 / THE FINDINGS</span><span class="line"></span><span id="provenance" class="recorded">NO RESULTS YET</span></div>
+          <div class="findings-lead"><h2 id="results-title">A place to start, not a guess.</h2><p id="results-sub">Choose a thread and ask the agent to explore.</p></div>
+          <div id="places" class="results-placeholder"><span class="big-asterisk">✳</span><p>Places are not invented by the agent.<br/>Results will appear only when a replay or genuine Qloo query returns matching entities.</p></div>
+          <div class="review"><span>THE HUMAN BOUNDARY</span><p id="review">Nothing here is an individual prediction. You decide whether to explore any suggestion.</p></div>
+        </section>
+      </div>
+            <section class="bottom">
+        <div class="method"><div><span class="index">03 / THE METHOD</span><h3>An agent with brakes.</h3></div><div class="timeline" id="timeline"><div>01 — Resolve cultural entity</div><div>02 — Ground with Qloo Taste AI</div><div>03 — Review / abstain if uncertain</div></div></div>
+        <div class="comparison"><span class="index">WITHOUT DATA ≠ WITH QLOO</span><p><strong>Ungrounded agent</strong><span>Would need to guess or abstain.</span></p><p><strong>Qloo-grounded agent</strong><span>Can cite returned entities, with limits and human review.</span></p></div>
+      </section>
+      <p class="status" id="status" role="status" aria-live="polite">LOCAL DEMO • Official Qloo key delivered but not validated or authorized for live use. All offline previews are fictional.</p>
+    </main>
+    <footer><span>Neighborhood Taste Scout / Clean-room prototype</span><span>No real GPS · No customer data · No external client scripts · No automatic actions</span></footer>
+  </div>
+</body>
+</html>
