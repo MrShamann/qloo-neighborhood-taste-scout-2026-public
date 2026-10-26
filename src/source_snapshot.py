@@ -108,7 +108,7 @@ def snapshot_from_live(bridge_id: str, result: object,
                     or c["entity_id"] in seen_contrib
                     or type(c["score"]) not in (float, int)
                     or not math.isfinite(c["score"])
-                    or not 0 <= c["score"] <= 1):
+                    or not 0 < c["score"] <= 1):
                 raise GuardError("invalid source explanation reference")
             seen_contrib.add(c["entity_id"])
         coverage = len(seen_contrib)

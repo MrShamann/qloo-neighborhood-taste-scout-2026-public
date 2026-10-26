@@ -113,6 +113,7 @@ class SnapshotTruthValidationTests(unittest.TestCase):
             lambda d:d["places"][0].update(agent_decision_is_automatic_approval=True),
             lambda d:d["places"][0]["source_explainability"][0].update(score=float("nan")),
             lambda d:d["places"][0]["source_explainability"][0].update(score=1.5),
+            lambda d:d["places"][0]["source_explainability"][0].update(score=0),
             lambda d:d["places"][0]["source_explainability"].append(
                 dict(d["places"][0]["source_explainability"][0])),
             lambda d:d["places"][2].update(name=""),

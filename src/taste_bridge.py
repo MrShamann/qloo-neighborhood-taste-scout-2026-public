@@ -99,7 +99,7 @@ def _extract_explainability(item: dict, resolved_ids: list[str]) -> list[dict]:
         score=entry.get("score")
         if (entity not in resolved_ids or
             isinstance(score,bool) or not isinstance(score,(int,float)) or
-            not 0<=score<=1):
+            not 0<round(float(score),3)<=1):
             continue
         if entity in [e["entity_id"] for e in accepted]:
             continue

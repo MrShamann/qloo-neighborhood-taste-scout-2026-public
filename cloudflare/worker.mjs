@@ -50,7 +50,7 @@ const places=(data,ids)=>{
     const values=[], used=new Set();
     if(Array.isArray(attribution))for(const x of attribution.slice(0,8)){
       if(!object(x)||!ids.includes(x.entity_id)||used.has(x.entity_id)||
-        typeof x.score!=="number"||!Number.isFinite(x.score)||x.score<0||x.score>1)continue;
+        typeof x.score!=="number"||!Number.isFinite(x.score)||x.score<=0||x.score>1||Math.round(x.score*1000)<=0)continue;
       used.add(x.entity_id);values.push({entity_id:x.entity_id,score:Math.round(x.score*1000)/1000});
     }
     const n=values.length;
@@ -75,8 +75,27 @@ async function qlooGET(path,params,key,fetcher){
   if(r.status!==200||r.redirected)throw Error("PROVIDER_READ_FAILED");
   const size=Number(r.headers.get("content-length")??0);
   if(size>196608)throw Error("RESPONSE_TOO_LARGE");
-  const bytes=await r.arrayBuffer();
-  if(bytes.byteLength>196608)throw Error("RESPONSE_TOO_LARGE");
+  // Content-Length can be omitted or forged. Bound bytes DURING streaming
+  // rather than allocating an unbounded arrayBuffer before validation.
+  if(!r.body)throw Error("EMPTY_PROVIDER_BODY");
+  const reader=r.body.getReader();
+  const chunks=[];
+  let total=0;
+  try{
+    while(true){
+      const {done,value}=await reader.read();
+      if(done)break;
+      total+=value.byteLength;
+      if(total>196608){
+        await reader.cancel().catch(()=>{});
+        throw Error("RESPONSE_TOO_LARGE");
+      }
+      chunks.push(value);
+    }
+  }finally{reader.releaseLock();}
+  const bytes=new Uint8Array(total);
+  let offset=0;
+  for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
   const result=JSON.parse(new TextDecoder().decode(bytes));
   if(!object(result))throw Error("BAD_JSON");
   return result;

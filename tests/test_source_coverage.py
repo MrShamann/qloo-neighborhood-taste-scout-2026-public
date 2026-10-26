@@ -75,5 +75,22 @@ class SourceCoverageTests(unittest.TestCase):
         self.assertFalse(rows[0]["source_coverage_is_user_fit"])
 
 
+    def test_zero_and_subprecision_scores_never_create_second_evidence(self):
+        from src.taste_bridge import _private_bridge, resolve_artist
+        scene = _private_bridge("bridge-new-york")
+        ids = [resolve_artist(x, name) for x, name in
+               zip(scene["replay"]["searches"], scene["artists"])]
+        for value in (0, -0.001, 0.00001, float("nan"), float("inf")):
+            with self.subTest(value=value):
+                altered = copy.deepcopy(scene["replay"]["insights"])
+                entries = altered["results"]["entities"][0]["query"]["explainability"]["signal.interests.entities"]
+                entries[1]["score"] = value
+                result = _normalize_places(altered, ids, 3, True)
+                self.assertEqual(result[0]["source_coverage_count"], 1)
+                self.assertEqual(result[0]["agent_decision"],
+                                 "SECOND_INTEREST_NOT_EVIDENCED")
+
+
+
 if __name__=="__main__":
     unittest.main()

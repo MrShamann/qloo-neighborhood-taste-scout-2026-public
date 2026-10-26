@@ -134,3 +134,44 @@ test("Durable Object reserves globally, caches one source, and denies another ru
    assert.equal(urls.length,3);
  }finally{globalThis.fetch=realFetch;}
 });
+
+test("zero or subprecision explainability is NOT evidence for both inputs",async()=>{
+  for(const rejectedScore of [0, -0.01, 0.000001, Number.NaN]){
+    let count=0;
+    const fake=async()=>{
+      const results=[
+        search("Miles Davis",a),
+        search("Radiohead",b),
+        insights()
+      ];
+      results[2].results[0].query.explainability["signal.interests.entities"][1].score=rejectedScore;
+      const result=results[count++];
+      return new Response(JSON.stringify(result),{status:200});
+    };
+    const doc=await authenticAgent(scene,envReady.QLOO_API_KEY,fake);
+    assert.equal(count,3);
+    assert.equal(doc.places[0].source_coverage_count,1);
+    assert.equal(doc.places[0].agent_decision,"SECOND_INTEREST_NOT_EVIDENCED");
+    assert.equal(doc.places[0].source_explainability.length,1);
+  }
+});
+
+
+test("oversized provider response without Content-Length stops before further Qloo reads",async()=>{
+  let count=0;
+  const oversized=async(url,opts)=>{
+    count++;
+    assert.equal(new URL(url).pathname,"/search");
+    const stream=new ReadableStream({
+      start(controller){
+        controller.enqueue(new Uint8Array(150000));
+        controller.enqueue(new Uint8Array(60000));
+        controller.close();
+      }
+    });
+    return new Response(stream,{status:200,headers:{"content-type":"application/json"}});
+  };
+  await assert.rejects(authenticAgent(scene,envReady.QLOO_API_KEY,oversized),
+                       /RESPONSE_TOO_LARGE/);
+  assert.equal(count,1);
+});
