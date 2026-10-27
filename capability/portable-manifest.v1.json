@@ -1,0 +1,178 @@
+{
+  "schema_version": "lab-portable-capability-candidate/1.0",
+  "capability_id": "neighborhood-taste-scout.dual_artist_place_evidence.v1",
+  "lifecycle_state": "ORIGINAL_CANDIDATE_NOT_TRANSFERRED",
+  "display_name": "Two-Artist Place Evidence Audit",
+  "summary": "Public cultural entity evidence audit and human venue due diligence; no individual profiling, bookings, payments, or contact.",
+  "author": {
+    "copyright_holder": "Jin Yang",
+    "copyright_year": 2026,
+    "code_license": "MIT",
+    "independent_project": true
+  },
+  "provenance": {
+    "public_repository": "https://github.com/MrShamann/qloo-neighborhood-taste-scout-2026-public",
+    "source_paths": [
+      "src/taste_bridge.py",
+      "src/taste_scout.py",
+      "src/source_snapshot.py",
+      "cloudflare/worker.mjs",
+      "web/app.js"
+    ],
+    "source_digest_rule": "Resolve Git tree SHA and each source file SHA256 at export; do not embed a self-referential commit hash in source.",
+    "test_paths": [
+      "tests/test_source_coverage.py",
+      "tests/test_source_snapshot.py",
+      "cloudflare/worker.test.mjs"
+    ]
+  },
+  "invocation": {
+    "transport": "HTTPS",
+    "method": "POST",
+    "relative_path": "/api/bridge",
+    "content_type": "application/json",
+    "input_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bridge_id",
+        "mode"
+      ],
+      "properties": {
+        "bridge_id": {
+          "type": "string",
+          "enum": [
+            "bridge-new-york",
+            "bridge-tokyo",
+            "bridge-paris"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "mock",
+            "live"
+          ]
+        }
+      }
+    },
+    "output_contract": {
+      "type": "object",
+      "required": [
+        "mode",
+        "provider_verified",
+        "provider_api_calls",
+        "scene_id",
+        "city",
+        "artists",
+        "places",
+        "agent_steps",
+        "automatic_actions",
+        "human_confirmation_required"
+      ],
+      "result_categories": [
+        "SOURCE_VALUES_FOR_BOTH_REVIEW_ONLY",
+        "SECOND_INTEREST_NOT_EVIDENCED",
+        "ABSTAIN_NO_INTEREST_ATTRIBUTION"
+      ],
+      "provenance_labels": [
+        "QLOO_HACKATHON_TWO_ARTIST_API_LIVE",
+        "SYNTHETIC_BRIDGE_REPLAY_NO_API"
+      ],
+      "guarantee": "Live place names originate from Qloo's authenticated response and are for human review only, not preference or suitability claims."
+    },
+    "failures": [
+      {
+        "http_status": 400,
+        "kind": "BAD_JSON_OR_QUERY"
+      },
+      {
+        "http_status": 403,
+        "kind": "ORIGIN_OR_RIGHTS_GATES"
+      },
+      {
+        "http_status": 409,
+        "kind": "CONCURRENT_LIVE_REQUEST"
+      },
+      {
+        "http_status": 413,
+        "kind": "REQUEST_TOO_LARGE"
+      },
+      {
+        "http_status": 415,
+        "kind": "INVALID_CONTENT_TYPE"
+      },
+      {
+        "http_status": 422,
+        "kind": "INVALID_BRIEF_OR_NO_LIVE_ACCESS"
+      },
+      {
+        "http_status": 429,
+        "kind": "SPONSOR_BUDGET_EXHAUSTED"
+      },
+      {
+        "http_status": 502,
+        "kind": "SOURCE_FAILED_NO_RETRY"
+      },
+      {
+        "http_status": 503,
+        "kind": "PERSISTENT_GUARD_OR_ASSET_UNAVAILABLE"
+      }
+    ]
+  },
+  "provider": {
+    "mandated_by_contest": "Qloo Taste AI",
+    "api_origin": "https://hackathon.api.qloo.com",
+    "allowed_read_paths": [
+      "/search",
+      "/v2/insights"
+    ],
+    "maximum_reads_per_live_run": 3,
+    "retries": 0,
+    "fresh_result_per_live_run": true,
+    "output_cache_policy": "DO_NOT_CACHE_QLOO_RESULTS_FOR_JUDGES",
+    "secret_delivery": "SERVER_SIDE_ONLY",
+    "infrastructure": "Independent zero-new-spend Free candidate; no private platform dependency"
+  },
+  "safety": {
+    "actual_side_effects": [
+      "Authorized Qloo read-only GET requests",
+      "Durable Object budget reservations and short lease"
+    ],
+    "forbidden_side_effects": [
+      "Payment",
+      "Booking",
+      "Outreach",
+      "Personal profile collection",
+      "Private venture access"
+    ],
+    "personal_profiles": false,
+    "human_review_required": true,
+    "unsupported_claims": [
+      "individual preference",
+      "venue opening hours",
+      "measured curator benefit",
+      "guaranteed relevance"
+    ],
+    "no_credential_or_vendor_result_in_export": true
+  },
+  "rights": {
+    "first_party_code": "MIT",
+    "external_api_data": "Qloo provider output is not MIT-licensed by this source-code license",
+    "contest_and_sponsor_terms": "Re-check sponsor and API rights before commercial use or source transfer",
+    "contributor_title": "Independent original candidate; verify chain of title separately for downstream acquisition"
+  },
+  "transfer": {
+    "state": "NO_TRANSFER_UNTIL_SEPARATE_RIGHTS_AND_INTERFACE_APPROVAL",
+    "automatic_import_enabled": false,
+    "private_system_dependency": false,
+    "requirements": [
+      "Exact rights holder authorization",
+      "Independent receiving-system interface review",
+      "Qloo provider data and API clearance",
+      "Provenance/security audit",
+      "Separate integration tests"
+    ],
+    "source_code_or_credentials_transfer": "NONE"
+  }
+}

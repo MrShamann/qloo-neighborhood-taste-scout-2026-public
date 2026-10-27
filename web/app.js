@@ -142,6 +142,20 @@ function displayBridgeEvidence(result){
     && result.mode==="SYNTHETIC_BRIDGE_REPLAY_NO_API"
     && result.provider_api_calls===0;
   if(!real&&!fake&&!cached)throw Error("Source provenance cannot be verified");
+  // Client-side truth boundary: a real-looking response for a different
+  // brief must never be rendered, even if the server or its cache is wrong.
+  if(result.scene_id!==activeBridge.id || result.city!==activeBridge.city ||
+     result.artists.some((source,i)=>source.artist!==activeBridge.artists[i]))
+    throw Error("Source belongs to another curator brief");
+  if(!Array.isArray(result.agent_steps) || result.agent_steps.length!==5 ||
+      result.agent_steps.some((step,i)=>!step ||
+        step.phase!==["RESOLVE_A","RESOLVE_B","GROUND_BOTH","FACT_CHECK","HUMAN_REVIEW"][i] ||
+        typeof step.status!=="string"))
+    throw Error("Invalid source verification trail");
+  if(result.source_explainability_count!==
+      result.places.filter(place=>Array.isArray(place?.source_explainability) &&
+        place.source_explainability.length>0).length)
+    throw Error("Contradictory source evidence count");
   const sourced=real||cached;
   setText("bridge-provenance",cached?"QLOO SOURCE SNAPSHOT / NOT LIVE":
     real?"QLOO API × 3 / VERIFIED":"FICTIONAL REPLAY / NOT QLOO");
