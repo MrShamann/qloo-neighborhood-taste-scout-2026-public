@@ -19,7 +19,7 @@ def main():
     # live requests, even in local development.
     (target/"static-adapter.js").unlink()
     html=(ROOT/"web"/"index.html").read_text()
-    html=html.replace("<main>",'<aside role="note" class="offline-banner">Live Qloo Taste AI is available when the LIVE checkbox is selected. Every run uses fresh read-only Qloo results; fictional examples are explicitly labeled. No personal histories, venue booking or payments.</aside><main>',1)
+    html=html.replace("<main>",'<aside role="note" class="offline-banner">SECTION 01 — TWO-ARTIST BRIDGE is the live Qloo agent: select a brief, leave LIVE selected, then click Run LIVE Qloo evidence. SECTION 02 is a fictional single-artist comparison only. No personal histories, venue booking or payments.</aside><main>',1)
     (target/"index.html").write_text(html)
     assert "static-adapter.js" not in html
     print("PRIVATE_WORKER_ASSETS_READY",target)

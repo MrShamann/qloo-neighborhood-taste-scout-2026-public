@@ -85,10 +85,11 @@ async function boot(){
     if(!r.ok)throw Error("Cannot load independent scenarios");
     const d=await r.json();
     ready=true;addScenes(d.scenes);
-    byId("live").disabled=!d.provider_ready;
-    byId("provider-hint").textContent=d.provider_ready
-      ?"/ event key + authorized quota gate available"
-      :"/ locked until issued key and free event quota are verified";
+    // This legacy single-artist baseline is always synthetic; the only
+    // contest-qualifying live Qloo workflow is Section 01, the Two-Artist Bridge.
+    byId("live").checked=false;
+    byId("live").disabled=true;
+    byId("provider-hint").textContent="/ for REAL Qloo results, use Section 01 · Two-Artist Bridge above";
     byId("run").addEventListener("click",run);
   }catch(e){setText("status","LOCAL DEMO UNAVAILABLE · "+e.message);}
 }
@@ -337,6 +338,17 @@ async function bootBridge(){
     byId("bridge-run").disabled=false;
     byId("bridge-live").disabled=doc.provider_ready!==true;
     byId("bridge-live").checked=doc.provider_ready===true;
+    const syncBridgeLabel=()=>{
+      byId("bridge-run").firstChild.textContent=
+        !byId("bridge-live").disabled&&byId("bridge-live").checked
+          ?"Run LIVE Qloo evidence "
+          :"Run FICTIONAL evidence replay ";
+    };
+    byId("bridge-live").addEventListener("change",syncBridgeLabel);
+    syncBridgeLabel();
+    setText("status",doc.provider_ready===true
+      ?"LIVE QLOO READY · Choose two artists in Section 01 and click Run LIVE Qloo evidence. Section 02 is a fictional comparison."
+      :"FICTIONAL REPLAY ONLY · Live Qloo access is unavailable. Section 02 is a fictional comparison.");
     setText("bridge-hint",snapshotReadyScene
       ?"One specifically approved historical Qloo source snapshot can be reviewed. Other briefs remain fictional; no live Qloo calls are made by visitors."
       :doc.provider_ready===true
