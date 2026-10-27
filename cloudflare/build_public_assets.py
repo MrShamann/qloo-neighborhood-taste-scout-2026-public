@@ -1,4 +1,4 @@
-"""Private, synthetic static assets for un-deployed Cloudflare Worker preview."""
+"""Reproducible judge UI assets for Cloudflare Worker (never bundle credentials)."""
 from __future__ import annotations
 import sys
 import shutil
@@ -19,7 +19,7 @@ def main():
     # live requests, even in local development.
     (target/"static-adapter.js").unlink()
     html=(ROOT/"web"/"index.html").read_text()
-    html=html.replace("<main>",'<aside role="note" class="offline-banner">Public interactive preview: all current place examples are FICTIONAL, not authenticated Qloo outputs. Live Qloo calls remain disabled pending verified event free-use and data rights. No personal data, booking or payment.</aside><main>',1)
+    html=html.replace("<main>",'<aside role="note" class="offline-banner">Live Qloo Taste AI is available when the LIVE checkbox is selected. Every run uses fresh read-only Qloo results; fictional examples are explicitly labeled. No personal histories, venue booking or payments.</aside><main>',1)
     (target/"index.html").write_text(html)
     assert "static-adapter.js" not in html
     print("PRIVATE_WORKER_ASSETS_READY",target)

@@ -1,4 +1,7 @@
-# PRIVATE pre-release only. NO wrangler deploy without exact Founder authority.
+# Jin Yang individual Qloo Agentic 2026; personally authorized MIT source.
+# Official October 26 organizer email: free, live output allowed, no cached
+# judging responses; Ian Devpost: no automatic paid charges. FREE Worker ONLY.
+# QLOO_API_KEY is a separate encrypted Worker secret, NEVER in source.
 name = "qloo-neighborhood-evidence-agent"
 main = "worker.mjs"
 compatibility_date = "2026-10-26"
@@ -16,3 +19,11 @@ class_name = "QlooBudget"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["QlooBudget"]
+
+[vars]
+QLOO_CALLS_APPROVED = "YES"
+QLOO_ZERO_OVERAGE_VERIFIED = "YES"
+QLOO_PUBLIC_SOURCE_DISPLAY_RIGHTS_VERIFIED = "YES"
+FOUNDER_EXACT_PUBLIC_RELEASE_APPROVED = "YES"
+CF_WORKERS_FREE_PLAN_VERIFIED = "YES"
+QLOO_MAX_READS = "300"

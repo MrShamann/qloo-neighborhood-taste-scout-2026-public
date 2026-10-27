@@ -56,7 +56,7 @@ const post=(mode,id="bridge-new-york",headers={})=>new Request(origin+"/api/brid
 function guardContext(){
  const map=new Map();let last=Promise.resolve();
  return {storage:{
-   get:async k=>map.get(k),put:async(k,v)=>{map.set(k,v);}
+   get:async k=>map.get(k),put:async(k,v)=>{map.set(k,v);},delete:async k=>{map.delete(k);}
  },blockConcurrencyWhile:fn=>{
    const previous=last;
    let finish;last=new Promise(r=>finish=r);
@@ -106,10 +106,10 @@ test("ambiguous identity fails closed after first read",async()=>{
  await assert.rejects(authenticAgent(scene,envReady.QLOO_API_KEY,fake));
  assert.equal(calls,1);
 });
-test("Durable Object reserves globally, caches one source, and denies another run",async()=>{
+test("Durable Object never caches sponsor results; fails shut at global read budget",async()=>{
  const ctx=guardContext();
  const api=new QlooBudget(ctx,envReady);
- const realFetch=globalThis.fetch;
+ const previous=globalThis.fetch;
  const {handler,urls}=sourceProvider();
  globalThis.fetch=handler;
  try{
@@ -117,24 +117,90 @@ test("Durable Object reserves globally, caches one source, and denies another ru
      body:JSON.stringify(scene)});
    const first=await api.fetch(req());
    assert.equal(first.status,200);
-   assert.equal((await first.json()).provider_api_calls,3);
+   const live=await first.json();
+   assert.equal(live.provider_api_calls,3);
+   assert.equal(live.provider_verified,true);
    assert.equal(urls.length,3);
    assert.equal(ctx.map.get("reads_reserved"),3);
+   assert.equal(ctx.map.has("active_until"),false);
+   assert.equal([...ctx.map.keys()].some(x=>x.startsWith("scene:")),false);
    const second=await api.fetch(req());
-   assert.equal(second.status,200);
-   const cached=await second.json();
-   assert.equal(cached.provider_api_calls,0);
-   assert.equal(cached.source_acquisition_calls,3);
-   assert.equal(cached.source_data_is_live_per_request,false);
-   assert.equal(cached.snapshot_is_sponsor_signed,false);
+   assert.equal(second.status,429);
    assert.equal(urls.length,3);
-   const exhausted=await api.fetch(new Request("https://internal.invalid/run",{
-     method:"POST",body:JSON.stringify({...scene,id:"bridge-tokyo"})}));
-   assert.equal(exhausted.status,429);
-   assert.equal(urls.length,3);
- }finally{globalThis.fetch=realFetch;}
+ }finally{globalThis.fetch=previous;}
 });
-
+test("every permitted judge interaction fetches fresh Qloo evidence",async()=>{
+ const ctx=guardContext();
+ const env={...envReady,QLOO_MAX_READS:"6"};
+ const api=new QlooBudget(ctx,env);
+ const previous=globalThis.fetch;
+ let n=0;
+ const fixtures=[search("Miles Davis",a),search("Radiohead",b),insights()];
+ globalThis.fetch=async(url,options)=>{
+   assert.equal(new URL(url).origin,"https://hackathon.api.qloo.com");
+   assert.equal(options.method,"GET");
+   const data=fixtures[(n++)%3];
+   return new Response(JSON.stringify(data),{status:200});
+ };
+ try{
+   const req=()=>new Request("https://internal.invalid/run",{method:"POST",
+     body:JSON.stringify(scene)});
+   for(let i=0;i<2;i++){
+     const result=await api.fetch(req());
+     assert.equal(result.status,200);
+     assert.equal((await result.json()).provider_api_calls,3);
+     assert.equal(n,(i+1)*3);
+   }
+   assert.equal(ctx.map.get("reads_reserved"),6);
+   assert.equal(ctx.map.size,1);
+   const exhausted=await api.fetch(req());
+   assert.equal(exhausted.status,429);
+   assert.equal(n,6);
+ }finally{globalThis.fetch=previous;}
+});
+test("a busy live Qloo request is rejected and never served from a cache",async()=>{
+ const ctx=guardContext(),env={...envReady,QLOO_MAX_READS:"6"};
+ const api=new QlooBudget(ctx,env);
+ const previous=globalThis.fetch;
+ let release;
+ const gate=new Promise(resolve=>{release=resolve;});
+ let calls=0;
+ const fixtures=[search("Miles Davis",a),search("Radiohead",b),insights()];
+ globalThis.fetch=async()=>{
+   if(calls===0)await gate;
+   return new Response(JSON.stringify(fixtures[(calls++)%3]),{status:200});
+ };
+ try{
+   const req=()=>new Request("https://internal.invalid/run",{method:"POST",
+     body:JSON.stringify(scene)});
+   const pending=api.fetch(req());
+   for(let i=0;i<100&&!ctx.map.has("active_until");i++)
+     await new Promise(resolve=>setTimeout(resolve,2));
+   assert.equal(ctx.map.get("reads_reserved"),3);
+   const competing=await api.fetch(req());
+   assert.equal(competing.status,409);
+   release();
+   const first=await pending;
+   assert.equal(first.status,200);
+   assert.equal(calls,3);
+   assert.equal(ctx.map.has("active_until"),false);
+ }finally{release();globalThis.fetch=previous;}
+});
+test("Qloo upstream failure consumes reservation and is never retried",async()=>{
+ const ctx=guardContext(),api=new QlooBudget(ctx,envReady);
+ const previous=globalThis.fetch;
+ let n=0;
+ globalThis.fetch=async()=>{n++;return new Response("failure",{status:500});};
+ try{
+   const req=()=>new Request("https://internal.invalid/run",{method:"POST",
+     body:JSON.stringify(scene)});
+   assert.equal((await api.fetch(req())).status,502);
+   assert.equal(n,1);
+   assert.equal(ctx.map.get("reads_reserved"),3);
+   assert.equal((await api.fetch(req())).status,429);
+   assert.equal(n,1);
+ }finally{globalThis.fetch=previous;}
+});
 test("zero or subprecision explainability is NOT evidence for both inputs",async()=>{
   for(const rejectedScore of [0, -0.01, 0.000001, Number.NaN]){
     let count=0;

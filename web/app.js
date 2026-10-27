@@ -322,10 +322,11 @@ async function bootBridge(){
     chooseBridge(bridgeList[0].id);
     byId("bridge-run").disabled=false;
     byId("bridge-live").disabled=doc.provider_ready!==true;
+    byId("bridge-live").checked=doc.provider_ready===true;
     setText("bridge-hint",snapshotReadyScene
       ?"One specifically approved historical Qloo source snapshot can be reviewed. Other briefs remain fictional; no live Qloo calls are made by visitors."
       :doc.provider_ready===true
-      ?"Event credential and quota gates are configured; any live run will use three read-only GETs."
+      ?"REAL QLOO LIVE: every request makes two authenticated Search GETs and one Insights GET. No cached Qloo result, no automatic retries or booking."
       :"Real key delivery is not proof of quota. Live Qloo remains locked; zero API calls.");
     byId("bridge-run").addEventListener("click",()=>runBridge(null));
     byId("bridge-snapshot").addEventListener("click",()=>runBridge("snapshot"));

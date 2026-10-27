@@ -1,4 +1,4 @@
-/* Qloo contest-only FREE Worker candidate. Original code, not deployed.
+/* Qloo contest-only FREE Worker live agent. Original code, no Qloo output cache.
  * Real provider calls require exact rights, free-plan, key and Founder gates.
  * A Durable Object reserves a global max before 3 GETs; never retries.
  */
@@ -126,40 +126,55 @@ export async function authenticAgent(scene,key,fetcher=fetch){
     comparison:{measured_user_benefit_proven:false,cross_taste_lift_proven:false},
     limits:["Aggregate public tastes only","Venue facts unverified","Missing attribution never inferred"]};
 }
-function historical(source,at){return {...source,
-  mode:"QLOO_HACKATHON_VERIFIED_SOURCE_SNAPSHOT",provider_api_calls:0,source_acquisition_calls:3,
-  source_data_is_live_per_request:false,snapshot_is_sponsor_signed:false,source_acquired_at_utc:at};}
+// Organizer confirms: event calls are free/no paid overage and judges must
+// interact with LIVE source results. Never serve an old real Qloo snapshot.
+// The Durable Object persists budget/lease only, not raw response data.
 export class QlooBudget{
   constructor(ctx,env){this.ctx=ctx;this.env=env;}
   async fetch(request){
-    if(request.method!=="POST"||new URL(request.url).pathname!=="/run")return fail(404,"NOT_FOUND");
-    if(!ready(this.env))return fail(403,"NO_API_RIGHTS");
-    let scene;try{scene=await request.json();}catch{return fail(400,"BAD_JSON");}
-    if(!object(scene)||!IDS.includes(scene.id))return fail(422,"BAD_SCENE");
-    let old,reason="",reserved=false;
-    try{await this.ctx.blockConcurrencyWhile(async()=>{
-      old=await this.ctx.storage.get("scene:"+scene.id);
-      if(old){reason=old.status;return;}
-      const used=Number(await this.ctx.storage.get("reads_reserved")||0);
-      const max=Number(this.env.QLOO_MAX_READS||3);
-      if(!Number.isInteger(max)||max<3||max>9||used+3>max){reason="EXHAUSTED";return;}
-      await this.ctx.storage.put("reads_reserved",used+3);
-      await this.ctx.storage.put("scene:"+scene.id,{status:"IN_FLIGHT",at:currentUTC()});
-      reserved=true;
-    });}catch{return fail(503,"STORAGE_GUARD_FAILED");}
+    if(request.method!=="POST"||new URL(request.url).pathname!=="/run")
+      return fail(404,"NOT_FOUND");
+    if(!ready(this.env))return fail(403,"LIVE_EVENT_ACCESS_NOT_AUTHORIZED");
+    let scene;
+    try{scene=await request.json();}catch{return fail(400,"BAD_JSON");}
+    if(!object(scene)||!IDS.includes(scene.id)||!Array.isArray(scene.artists)||
+       scene.artists.length!==2||typeof scene.city!=="string")
+      return fail(422,"INVALID_SCENE");
+    let reserved=false, reason="";
+    try{
+      await this.ctx.blockConcurrencyWhile(async()=>{
+        const now=Date.now();
+        const active=Number(await this.ctx.storage.get("active_until")||0);
+        if(active>now){reason="BUSY";return;}
+        const max=Number(this.env.QLOO_MAX_READS||3);
+        if(!Number.isInteger(max)||max<3||max>300){reason="INVALID_BUDGET";return;}
+        const used=Number(await this.ctx.storage.get("reads_reserved")||0);
+        if(!Number.isInteger(used)||used<0||used+3>max){
+          reason="EXHAUSTED";return;
+        }
+        // Reserve full worst-case quota BEFORE network, with no automatic
+        // retries/refunds even if only the first read succeeds.
+        await this.ctx.storage.put("reads_reserved",used+3);
+        await this.ctx.storage.put("active_until",now+59000);
+        reserved=true;
+      });
+    }catch{return fail(503,"PERSISTENT_BUDGET_GUARD_FAILED");}
     if(!reserved){
-      if(reason==="READY"&&old?.source&&old?.at)return json(historical(old.source,old.at));
-      return fail(reason==="EXHAUSTED"?429:409,"NO_RETRY_OR_BUDGET_EXHAUSTED");
+      if(reason==="BUSY")return fail(409,"A_LIVE_QLOO_RUN_IS_IN_PROGRESS");
+      if(reason==="EXHAUSTED")return fail(429,"FIXED_EVENT_READ_BUDGET_EXHAUSTED");
+      return fail(503,"EVENT_BUDGET_CONFIGURATION_INVALID");
     }
     try{
       const source=await authenticAgent(scene,this.env.QLOO_API_KEY);
-      const at=currentUTC();
-      await this.ctx.storage.put("scene:"+scene.id,{status:"READY",at,source});
+      // Do not save source to Durable Object, KV, file or public repository.
       return json(source);
     }catch{
-      // Never refund a reservation; a failed request could have cost quota.
-      try{await this.ctx.storage.put("scene:"+scene.id,{status:"FAILED",at:currentUTC()});}catch{}
-      return fail(502,"QLOO_SOURCE_ABSTAIN_NO_RETRY");
+      // Provider errors abstain. We never turn failed live requests into mocks.
+      return fail(502,"QLOO_LIVE_SOURCE_FAILED_NO_RETRY");
+    }finally{
+      // On a crash, the 59-second lease expires rather than silently replaying
+      // a prior response. The consumed call budget is never refunded.
+      try{await this.ctx.storage.delete("active_until");}catch{}
     }
   }
 }

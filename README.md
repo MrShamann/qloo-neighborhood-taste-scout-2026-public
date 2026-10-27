@@ -21,11 +21,13 @@ Visit http://127.0.0.1:8765/ . The local demo uses *invented venues and scores*,
 
 The real adapter pins HTTPS egress to `hackathon.api.qloo.com`. It resolves two independently typed artist entities using two bounded Search GETs, then queries one combined Insights GET for place entities in a selected city. It never infers missing explainability, never sends personal location or listening histories, and never books or pays for anything.
 
-An event-issued API credential must be stored server-side only. The live path is deliberately disabled until verified event quota, rate, key expiry, absolutely no paid overage, source output display rights and a separately scoped authorization are recorded. No authenticated Qloo request has yet been performed in this release candidate.
+The Qloo hackathon team confirmed on October 26 that authenticated event requests are free through judging, without automatic paid charges, and the judge app must return **live results** (not historical cached responses). A strictly bounded local genuine Qloo proof completed two Search GETs and one Insights GET on October 27: **3/3 authenticated calls, three live venue entities, explicit attribution for both inputs on all three**. The original source/trace is kept privately and excluded from GitHub. No venue opening hours, group fit or measured impact is claimed.
 
-## Optional Cloudflare Workers deployment candidate
+## Cloudflare Workers Free — live judge runtime
 
-The optional `cloudflare/` adapter is a *private* deploy candidate using Workers Free and a SQLite Durable Object to reserve a global maximum of three Qloo GETs before sending any request. Repeat visitors read previously validated results, without fresh sponsor requests. A failed first attempt never auto-retries or refunds the reserved quota. Neither a Cloudflare account plan nor a source-data redistribution grant has been verified for public release.
+This standalone app uses a personally controlled Workers Free account plus one SQLite Durable Object. Each judge request runs a fresh 3-GET workflow, never reuses a prior Qloo response, and never saves raw Qloo data in Durable Objects, Workers KV, a source repository or a static asset. Only total reserved API call budget and a short-lived in-flight lease are persisted. Each run is serialized and fails closed on a busy request, unauthorized source, invalid schema or exhausted fixed budget. There are no automatic provider retries and no payment, booking, personal profiles or paid infrastructure.
+
+The event credential is installed exclusively as a Cloudflare encrypted Worker secret, never exposed to the browser, a Git commit or a demo screenshot.
 
 Build synthetic static assets in an isolated worktree:
 
@@ -37,6 +39,6 @@ The generated `cloudflare/public/` directory is excluded from source control. In
 
 ## Evidence and limitations
 
-The reviewed private source at `9ddb88e9563ea9d24bac6c19ce8dcdaca976da3c` passed 116 Python tests and 5 synthetic Worker tests; desktop 1440px and mobile 390px browsers passed local fictional-case and source-status tests. A clean-clone Worker test failure was traced to an incorrect dependency on generated static assets. The tests now use explicit synthetic stubs and passed independently before assets were built. All data in these tests are artificial. No real Qloo authenticated access, public judge host, user benefit measurement, finalist status or award is claimed.
+Original code passed 117 Python tests and its latest Worker test suite; desktop and mobile browser tests include forged-zero-source and stale-scene rejection. Synthetic test fixtures are clearly labeled. One real Qloo 3-GET local proof completed October 27; no source API credential, private live result cache, individual profile, user benefit, finalist status or prize is claimed.
 
-Source code and original synthetic fixtures are offered under the **MIT License** (see LICENSE). The license does not confer Qloo API/data rights. A public functional demo and contest submission require separately verified sponsor authorization, real-provider evidence, hosting approval, and Devpost acceptance.
+Source code and synthetic fixtures are MIT licensed. Qloo live result data remain subject to Qloo terms; the public source carries no license grant to Qloo content. The actual publicly accessible app must pass its own anonymous judge validation before a final Devpost submission can be claimed.
